@@ -1,0 +1,173 @@
+1. and 2.
+primary keys are the bold rows in each table
+and foreign keys are the rows in each table which connect to other rows
+(the blue rows which are no bold in the second page of the pdf)
+
+Here is how I constructed the diagramm--->
+
+https://dbdiagram.io/d/628ce66ff040f104c18993e6
+
+table actor as ac {
+  actor_id smallint [pk, increment]
+  first_name varchar
+  last_name varchar
+  last_update timestamp
+  }
+  
+table address as ad {
+  address_id mediumint [pk, increment]
+  address varchar
+  address2 varchar
+  district varchar
+  city_id smallint 
+  postal_code varchar
+  phone varchar
+  last_update timestamp
+  }
+  
+table category as ca {
+  category_id mediumint [pk, increment]
+  name varchar
+  last_update timestamp
+  }
+  
+table city as ci {
+  city_id mediumint [pk, increment]
+  country_id mediumint
+  city varchar
+  last_update timestamp
+  }
+  
+table country as co {
+  country_id mediumint [pk, increment]
+  country varchar
+  last_update timestamp
+  }
+  
+table customer as cu {
+  customer_id mediumint [pk, increment]
+  address_id mediumint
+  first_name varchar
+  last_name varchar
+  email varchar
+  active boolean
+  create_date datetime
+  last_update timestamp
+  }
+  
+table film as f {
+  film_id mediumint [pk, increment]
+  category_id mediumint
+  title varchar
+  description text
+  release_year varchar
+  original_language_id mediumint
+  length mediumint
+  replacement_cost mediumint
+  rating varchar
+  special_features varchar
+  last_update timestamp
+  }
+  
+table language_of_film as lf {  
+ language_id mediumint [pk, increment]
+ film_id mediumint
+ last_update timestamp
+ }
+  
+table payment as p {
+ payment_id mediumint [pk, increment]
+ rental_id mediumint
+ amount float
+ payment_date timestamp
+ last_update timestamp
+ }
+ 
+table rental as r {
+ rental_id mediumint [pk, increment]
+ inventory_id mediumint
+ customer_id mediumint
+ rental_date timestamp
+ return_date timestamp
+ last_update timestamp
+ }
+  
+table inventory as i { 
+ inventory_id mediumint [pk, increment]
+ film_id mediumint
+ store_id mediumint
+ last_update timestamp
+ }
+
+table staff as st {
+ staff_id mediumint [pk, increment]
+ address_id mediumint
+ store_id mediumint
+ first_name varchar
+ last_name varchar
+ username varchar
+ password varchar
+ email varchar
+ picture blob
+ active boolean
+ last_update timestamp
+ }
+  
+table language as l {
+ language_id mediumint [pk, increment]
+ name varchar
+ last_update timestamp
+ }
+
+table film_actor as fa {
+ actor_id mediumint [pk, increment]
+ film_id mediumint
+ last_update timestamp
+ }
+ 
+table store as s {
+ store_id int [pk, increment]
+ manager_staff_id int
+ address_id int
+ last_update timestamp
+ }
+
+  
+  
+
+Ref: "payment"."rental_id" < "rental"."rental_id"
+
+Ref: "rental"."inventory_id" < "inventory"."inventory_id"
+
+Ref: "inventory"."film_id" < "customer"."address_id"
+
+Ref: "city"."country_id" < "country"."country_id"
+
+Ref: "language_of_film"."film_id" < "film"."film_id"
+
+Ref: "film_actor"."film_id" < "film"."film_id"
+
+Ref: "address"."address_id" < "staff"."address_id"
+
+Ref: "store"."store_id" < "inventory"."store_id"
+
+Ref: "film"."category_id" < "category"."category_id"
+
+Ref: "language_of_film"."language_id" < "language"."language_id"
+
+Ref: "film"."original_language_id" < "language"."language_id"
+
+Ref: "film"."film_id" < "inventory"."film_id"
+
+Ref: "staff"."store_id" < "store"."store_id"
+
+Ref: "actor"."actor_id" < "film_actor"."actor_id"
+
+Ref: "inventory"."film_id" < "language_of_film"."film_id"
+
+Ref: "customer"."address_id" < "address"."address"
+
+Ref: "language_of_film"."language_id" < "actor"."actor_id"
+
+Ref: "language_of_film"."film_id" < "film_actor"."film_id"
+
